@@ -11,13 +11,15 @@ ATMO_GRAVITY_INDEX = 2
 ATMO_PRESSURE_INDEX = 3
 ATMO_DENSITY_INDEX = 4
 ATMO_VISCOSITY_INDEX = 5
+__atmodata = {}
 
 
 ########### CODE ##########
 def loadAtmoData():
+    global __atmodata
     basepath = path.dirname(__file__)
     filepath = path.abspath(path.join(basepath, "..", "resources", "standard_atmospheric_data.txt"))
-    atmodata = {
+    __atmodata = {
     "altitude":[], "temperature": [],"gravity": [],
     "pressure": [],"density": [],"viscosity": []
     }
@@ -28,12 +30,12 @@ def loadAtmoData():
                 linedata = []
                 for i in row:
                     linedata.append(float(i))
-                atmodata["altitude"].append(linedata[ATMO_ALTITUDE_INDEX])
-                atmodata["temperature"].append(linedata[ATMO_TEMPERATURE_INDEX])
-                atmodata["gravity"].append(linedata[ATMO_GRAVITY_INDEX])
-                atmodata["pressure"].append(linedata[ATMO_PRESSURE_INDEX])
-                atmodata["density"].append(linedata[ATMO_DENSITY_INDEX])
-                atmodata["viscosity"].append(linedata[ATMO_VISCOSITY_INDEX])
+                __atmodata["altitude"].append(linedata[ATMO_ALTITUDE_INDEX])
+                __atmodata["temperature"].append(linedata[ATMO_TEMPERATURE_INDEX])
+                __atmodata["gravity"].append(linedata[ATMO_GRAVITY_INDEX])
+                __atmodata["pressure"].append(linedata[ATMO_PRESSURE_INDEX])
+                __atmodata["density"].append(linedata[ATMO_DENSITY_INDEX])
+                __atmodata["viscosity"].append(linedata[ATMO_VISCOSITY_INDEX])
             except:
                 pass
     atmofile.close()
@@ -68,8 +70,8 @@ def getViscosityData(altitude):
 def atmoInterpolate(altitude, key):
     # linear interpolation
     # find closest index
-    y_data = atmodata[key]
-    x_data = atmodata['altitude']
+    y_data = __atmodata[key]
+    x_data = __atmodata['altitude']
     n = 0
     if (altitude < x_data[0]) or (altitude > x_data[-1]):
         print("WARNING! standardatmo DATA SET OUT OF BOUNDS, INTERPOLATING PAST KNOWN DATA")
@@ -83,7 +85,7 @@ def atmoInterpolate(altitude, key):
 
 
 
-loadAtmoData() 
+loadAtmoData()
 
 if __name__ == '__main__':
     getAtmoData(-1200)

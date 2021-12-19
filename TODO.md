@@ -1,0 +1,3 @@
+Finish out LICENSE.md
+Finish out README.md
+Finish code...
