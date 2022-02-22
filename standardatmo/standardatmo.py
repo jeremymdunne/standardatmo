@@ -134,8 +134,26 @@ def atmoInterpolate(altitude, key):
     # find the closest lower index
     y_data = __atmodata[key]
     x_data = __atmodata['altitude']
+<<<<<<< HEAD
     val = newtonsDividedDifferenceInterpolation(altitude, x_data, y_data)
     return val
+=======
+    n = 0
+    if (altitude < x_data[0]) or (altitude > x_data[-1]):
+        print("WARNING! standardatmo DATA SET OUT OF BOUNDS, INTERPOLATING PAST KNOWN DATA")
+    # print('X_data ', x_data)
+    # print('alt ', altitude)
+
+    for i in range(0, len(x_data)):
+        if x_data[i] > altitude:
+            n = i-1
+            break
+    # print('n', n)
+    # linear
+    y_inter = (y_data[n] * (x_data[n+1] - altitude) + y_data[n+1] * (altitude - x_data[n])) / (x_data[n+1] - x_data[n])
+    return y_inter
+
+>>>>>>> 683da4d5e488c340b3f41e1286aa35ddb767ba33
 
 
 loadAtmoData()
