@@ -1,3 +1,3 @@
-Finish out LICENSE.md
-Finish out README.md
-Finish code...
+Future Improvements:
+1. Validate interpolation method
+2. Update storage/recall method 
